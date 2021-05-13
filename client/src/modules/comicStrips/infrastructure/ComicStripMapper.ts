@@ -12,6 +12,7 @@ export class ComicStripMapper {
     num,
     // eslint-disable-next-line camelcase
     safe_title,
+    numTimesViewed,
   }: ComicStripDTO): ComicStrip {
     return new ComicStrip({
       comicNumber: `${num}`,
@@ -22,6 +23,7 @@ export class ComicStripMapper {
         .set('date', Number(day))
         .set('month', Number(month))
         .set('year', Number(year)),
+      numTimesViewed,
     });
   }
 
@@ -31,6 +33,7 @@ export class ComicStripMapper {
     comicNumber,
     imageLink,
     title,
+    numTimesViewed,
   }: ComicStrip): ComicStripDTO {
     return {
       num: Number(comicNumber),
@@ -40,6 +43,7 @@ export class ComicStripMapper {
       day: `${dateCreated.get('date')}`,
       month: `${dateCreated.get('month')}`,
       year: `${dateCreated.get('year')}`,
+      numTimesViewed,
     };
   }
 }

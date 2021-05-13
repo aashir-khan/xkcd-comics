@@ -2,10 +2,12 @@
   display: flex;
   flex-direction: column;
 
-  .title-and-date-create {
+  .metadata {
     text-align: center;
+    font-weight: bold;
+    font-size: 3rem;
 
-    .date-create {
+    .smaller-text {
       font-size: 1.5rem;
     }
   }

@@ -1,4 +1,5 @@
 import { Either, Right, Left } from 'purify-ts/Either';
+import firebase from 'firebase/app';
 
 import {
   FailedApiResponse,
@@ -12,23 +13,65 @@ import {
 } from '../domain/ComicStripFailure';
 import { ComicStripMapper } from './ComicStripMapper';
 import { ComicStripDTO } from './ComicStripDTO';
+import { GetComicStripOptions } from '../domain/sharedTypes';
 
 interface Dependencies {
   baseApi: IBaseAPI;
+  firestore: firebase.firestore.Firestore;
 }
 
 export class ComicStripRepositoryImpl implements IComicStripRepository {
   private baseApi: IBaseAPI;
+  firestore: firebase.firestore.Firestore;
 
-  constructor({ baseApi }: Dependencies) {
+  constructor({ baseApi, firestore }: Dependencies) {
     this.baseApi = baseApi;
+    this.firestore = firestore;
+  }
+
+  get latestComicStripNumber(): string {
+    return '0';
+  }
+
+  async incrementComicStripViewCount(
+    comicStrip: ComicStrip
+  ): Promise<Either<ComicStripFailure, number>> {
+    const firestore = this.firestore;
+    const documentReference = firestore
+      .collection('comicStrips')
+      .doc(comicStrip.comicNumber);
+
+    try {
+      const documentSnapshot = await documentReference.get();
+      const isDocumentExists = documentSnapshot.exists;
+      let updatedViewCount: number;
+      if (!isDocumentExists) {
+        updatedViewCount = 1;
+      } else {
+        const data = documentSnapshot.data();
+        if (data) {
+          updatedViewCount = data.numTimesViewed + 1;
+        } else {
+          return Left(ComicStripFailureCases.unexpected());
+        }
+      }
+
+      await documentReference.set(
+        { numTimesViewed: updatedViewCount },
+        { merge: isDocumentExists }
+      );
+
+      return Right(updatedViewCount);
+    } catch (error) {
+      return Left(this.getDomainFailureFromApiFailure(error));
+    }
   }
 
   async getComicStrip({
     comicNumber,
-  }: any): Promise<Either<ComicStripFailure, ComicStrip>> {
+  }: GetComicStripOptions): Promise<Either<ComicStripFailure, ComicStrip>> {
     const apiUrl = `/api/proxy/xkcd/${
-      comicNumber === '0' ? '' : `${comicNumber}/`
+      comicNumber === this.latestComicStripNumber ? '' : `${comicNumber}/`
     }info.0.json`;
 
     const comicStripOrError = await this.baseApi.get<ComicStripDTO>(
@@ -37,28 +80,23 @@ export class ComicStripRepositoryImpl implements IComicStripRepository {
       // 'http://httpstat.us/500'
     );
 
-    return comicStripOrError.caseOf({
-      Left: (error) => Left(this.getDomainFailureFromApiFailure(error)),
-      Right: ({ data: comicStripDTO }) =>
-        Right(ComicStripMapper.toDomain(comicStripDTO)),
-    });
-  }
-
-  async getRandomComicStrip(): Promise<Either<ComicStripFailure, ComicStrip>> {
-    const latestComicStripOrError = await this.getComicStrip({
-      comicNumber: '0',
-    });
-
-    if (latestComicStripOrError.isLeft()) {
-      return latestComicStripOrError.unsafeCoerce();
+    if (comicStripOrError.isLeft()) {
+      return Left(
+        this.getDomainFailureFromApiFailure(comicStripOrError.unsafeCoerce())
+      );
     } else {
-      const latestComicStrip = latestComicStripOrError.unsafeCoerce();
-      const { comicNumber: maxComicNumber } = latestComicStrip;
-      const randomComicStripNumber = `${Math.floor(
-        Math.random() * Number(maxComicNumber) + 1
-      )}`;
+      const comicStripDTO = comicStripOrError.unsafeCoerce().data;
+      const updatedViewCountOrError = await this.incrementComicStripViewCount(
+        ComicStripMapper.toDomain(comicStripDTO)
+      );
 
-      return await this.getComicStrip({ comicNumber: randomComicStripNumber });
+      return updatedViewCountOrError.caseOf({
+        Left: (error) => Left(error),
+        Right: (updatedViewCount) => {
+          comicStripDTO.numTimesViewed = updatedViewCount;
+          return Right(ComicStripMapper.toDomain(comicStripDTO));
+        },
+      });
     }
   }
 

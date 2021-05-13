@@ -8,8 +8,8 @@ export const getComicStrip = ({
   comicNumber: string;
 }): AppThunk => {
   return async function (dispatch) {
-    const { comicStripRepository } = diContainer().cradle;
-    const comicStripOrFailure = await comicStripRepository.getComicStrip({
+    const { comicStripService } = diContainer().cradle;
+    const comicStripOrFailure = await comicStripService.getComicStrip({
       comicNumber,
     });
 
@@ -24,8 +24,8 @@ export const getComicStrip = ({
 
 export const getRandomComicStrip = (): AppThunk => {
   return async function (dispatch) {
-    const { comicStripRepository } = diContainer().cradle;
-    const comicStripOrFailure = await comicStripRepository.getRandomComicStrip();
+    const { comicStripService } = diContainer().cradle;
+    const comicStripOrFailure = await comicStripService.getRandomComicStrip();
 
     comicStripOrFailure.caseOf<void>({
       Left: (failure) =>

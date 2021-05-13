@@ -4,10 +4,12 @@ import { ComicStrip } from './ComicStrip';
 import { ComicStripFailure } from './ComicStripFailure';
 import { GetComicStripOptions } from './sharedTypes';
 
-export abstract class IComicStripRepository {
+export abstract class IComicStripService {
   abstract getComicStrip(
     options: GetComicStripOptions
   ): Promise<Either<ComicStripFailure, ComicStrip>>;
 
-  abstract get latestComicStripNumber(): string;
+  abstract getRandomComicStrip(): Promise<
+    Either<ComicStripFailure, ComicStrip>
+  >;
 }

@@ -7,4 +7,5 @@ export interface ComicStripDTO {
   safe_title: string;
   alt: string;
   img: string;
+  numTimesViewed?: number;
 }
