@@ -34,11 +34,14 @@ export default () => {
   }: {
     isRequestNext?: boolean;
   } = {}) => {
+    // don't attempt to handle a change page request if we haven't successfully already
+    // gotten some comic strip (i.e. we are not in loading or failure state)
     if (GetComicStripStateCases.is.success(stateValueGetComicStrip)) {
       const currentComicStrip = stateValueGetComicStrip;
 
       let newComicNumberToGet: string;
 
+      // if we don't passs in a value, that means we wat to get a random comic strip
       if (isRequestNext === undefined) {
         dispatch(getRandomComicStrip());
       } else {

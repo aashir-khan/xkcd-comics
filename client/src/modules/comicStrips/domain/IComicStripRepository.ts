@@ -9,5 +9,7 @@ export abstract class IComicStripRepository {
     options: GetComicStripOptions
   ): Promise<Either<ComicStripFailure, ComicStrip>>;
 
-  abstract get latestComicStripNumber(): string;
+  abstract getLatestComicStrip(): Promise<
+    Either<ComicStripFailure, ComicStrip>
+  >;
 }

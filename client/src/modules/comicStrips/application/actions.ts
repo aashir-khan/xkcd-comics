@@ -13,6 +13,8 @@ export const getComicStrip = ({
     const latestComicStripNumber = getState().comicStrips
       .latestComicStripNumber;
 
+    // only attempt to get a comic strip if the comic number requested is within
+    // the range of comic numbers that exist
     if (
       latestComicStripNumber &&
       Number(comicNumber) <= Number(latestComicStripNumber)
@@ -61,9 +63,7 @@ export const getRandomComicStrip = (): AppThunk => {
 export const getLatestComicStrip = (): AppThunk => {
   return async function (dispatch) {
     const { comicStripService } = diContainer().cradle;
-    const comicStripOrFailure = await comicStripService.getComicStrip({
-      comicNumber: '0',
-    });
+    const comicStripOrFailure = await comicStripService.getLatestComicStrip();
 
     comicStripOrFailure.caseOf<void>({
       Left: (failure) =>

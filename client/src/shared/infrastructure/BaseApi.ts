@@ -61,19 +61,6 @@ export class BaseAPI implements IBaseAPI {
     });
   }
 
-  // helper function to extract relevant fields from response
-  protected getData<T>(res: AxiosResponse<T>): ApiResponse<T> {
-    const { data, status } = res;
-    return Right({ data, status });
-  }
-
-  // helper function to extract relevant fields from error
-  protected getError(error: any): ApiResponse {
-    // eslint-disable-next-line no-debugger
-    if (error.response) return Left({ status: error.response.status });
-    return Left({ message: error.message });
-  }
-
   async get<T = any>(
     url: string,
     { params }: FunctionExtraParameters = {}
@@ -141,5 +128,18 @@ export class BaseAPI implements IBaseAPI {
     } catch (error) {
       return this.getError(error);
     }
+  }
+
+  // helper function to extract relevant fields from response
+  protected getData<T>(res: AxiosResponse<T>): ApiResponse<T> {
+    const { data, status } = res;
+    return Right({ data, status });
+  }
+
+  // helper function to extract relevant fields from error
+  protected getError(error: any): ApiResponse {
+    // eslint-disable-next-line no-debugger
+    if (error.response) return Left({ status: error.response.status });
+    return Left({ message: error.message });
   }
 }

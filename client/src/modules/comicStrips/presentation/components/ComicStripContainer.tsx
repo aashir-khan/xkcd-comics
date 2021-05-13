@@ -23,8 +23,8 @@ export const ComicStripContainer = ({
     <div className="comic-strip-container">
       <ComicStripDetails comicStrip={comicStrip} />
       <ComicStripNavigation
-        comicStrip={comicStrip}
-        latestComicStripNumber={latestComicStripNumber}
+        isNextPageDisabled={comicStrip.comicNumber === latestComicStripNumber}
+        isPreviousPageDisabled={comicStrip.comicNumber === '1'}
         onRequestNextPage={onRequestNextPage}
         onRequestPreviousPage={onRequestPreviousPage}
         onRequestRandomComicStrip={onRequestRandomComicStrip}

@@ -1,4 +1,4 @@
-import { Either, Right } from 'purify-ts/Either';
+import { Either } from 'purify-ts/Either';
 
 import { IComicStripService } from '../domain/IComicStripService';
 import { ComicStrip } from '../domain/ComicStrip';
@@ -23,9 +23,10 @@ export class ComicStripServiceImpl implements IComicStripService {
     return this.comicStripRepository.getComicStrip(options);
   }
 
-  async getRandomComicStrip(
+  getRandomComicStrip(
     maxComicStripNumber: string
   ): Promise<Either<ComicStripFailure, ComicStrip>> {
+    // in the range [1, maxComicStripNumber]
     const randomComicStripNumber = `${Math.floor(
       Math.random() * Number(maxComicStripNumber) + 1
     )}`;
@@ -33,18 +34,7 @@ export class ComicStripServiceImpl implements IComicStripService {
     return this.getComicStrip({ comicNumber: randomComicStripNumber });
   }
 
-  async getLatestComicStripNumber(): Promise<
-    Either<ComicStripFailure, number>
-  > {
-    const latestComicStripOrError = await this.getComicStrip({
-      comicNumber: this.comicStripRepository.latestComicStripNumber,
-    });
-
-    if (latestComicStripOrError.isLeft()) {
-      return latestComicStripOrError.unsafeCoerce();
-    } else {
-      const latestComicStrip = latestComicStripOrError.unsafeCoerce();
-      return Right(Number(latestComicStrip.comicNumber));
-    }
+  getLatestComicStrip(): Promise<Either<ComicStripFailure, ComicStrip>> {
+    return this.comicStripRepository.getLatestComicStrip();
   }
 }

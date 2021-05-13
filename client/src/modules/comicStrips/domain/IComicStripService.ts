@@ -12,4 +12,8 @@ export abstract class IComicStripService {
   abstract getRandomComicStrip(
     maxComicStripNumber: string
   ): Promise<Either<ComicStripFailure, ComicStrip>>;
+
+  abstract getLatestComicStrip(): Promise<
+    Either<ComicStripFailure, ComicStrip>
+  >;
 }

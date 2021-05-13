@@ -2,7 +2,7 @@ xkcd comics
 
 View deployed application (frontend) [here](https://aashir-xkcd-comics-api.netlify.app/)
 
-This application follows a (stripped-down) Domain-Driven Design architecture. More information can be seen [here](https://resocoder.com/2020/03/09/flutter-firebase-ddd-course-1-domain-driven-design-principles/). In addition, this application is divided into modules, with currently there only being a students module, but of which can be extended to include more modules as the domain scope increases.
+This application follows a (stripped-down) Domain-Driven Design architecture. More information can be seen [here](https://resocoder.com/2020/03/09/flutter-firebase-ddd-course-1-domain-driven-design-principles/). In addition, this application is divided into modules, with currently there only being a comicStrips module, but of which can be extended to include more modules as the domain scope increases.
 
 In addition, this application implements environment-dependent dependency injection (DI) using the awilix package. It also uses functional programming concepts such as Either to handle success and failure states gracefully. More information [here](https://medium.com/inato/expressive-error-handling-in-typescript-and-benefits-for-domain-driven-design-70726e061c86).
 
@@ -10,4 +10,20 @@ This application uses sum types/sealed unions using the [unionize](https://githu
 
 Firebase is used to store the view count for each comic strip.
 
-There exists a `.env.template` file that can be renamed to `.env` to populate the environment variables to use in the application.
+There exists a `.env.template` file that must be renamed to `.env` and then filled in to populate the environment variables to use in the application.
+
+To run server locally:
+
+```bash
+cd server
+yarn
+yarn run start:dev
+```
+
+To run client locally:
+
+```bash
+cd client
+yarn
+yarn run start
+```

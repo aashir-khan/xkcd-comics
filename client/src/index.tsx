@@ -14,6 +14,8 @@ async function main(): Promise<void> {
     DiContainer.setupInjection('production');
   }
 
+  // presentation layer is potentially dependent on application layer, so make sure
+  // that application is initialized before presentation layer is initialized
   await Application.init();
   Presentation.init();
 }
