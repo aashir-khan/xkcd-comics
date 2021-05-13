@@ -37,7 +37,6 @@ export default () => {
       let newComicNumberToGet: string;
 
       if (isRequestNext === undefined) {
-        newComicNumberToGet = '-1';
         dispatch(getRandomComicStrip());
       } else {
         if (isRequestNext === true) {

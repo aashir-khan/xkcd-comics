@@ -10,7 +10,9 @@ export const ComicStripDetails = ({ comicStrip }: ComicStripDetailsProps) => {
   return (
     <div className="comic-strip-details">
       <div className="metadata">
-        <div>{comicStrip.title}</div>
+        <div>
+          {comicStrip.title} (#{comicStrip.comicNumber})
+        </div>
         <div className="smaller-text">
           Created: {comicStrip.dateCreated.format('MMMM DD YYYY')}
         </div>
