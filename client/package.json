@@ -1,0 +1,86 @@
+{
+  "name": "xkcd-comics",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.5.1",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "awilix": "^4.3.4",
+    "axios": "^0.21.1",
+    "axios-cache-adapter": "^2.7.3",
+    "clsx": "^1.1.1",
+    "dayjs": "^1.10.4",
+    "node-sass": "^5.0.0",
+    "normalize.css": "^8.0.1",
+    "purify-ts": "^0.16.3",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "redux": "^4.1.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "unionize": "^3.1.0",
+    "web-vitals": "^1.0.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "test:watch": "react-scripts test --watch",
+    "eject": "react-scripts eject",
+    "format": "prettier --write src/**/*.{ts,tsx}",
+    "lint": "eslint --fix src/**/*.{ts,tsx}",
+    "lint:fix": "yarn run lint -- --fix"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "@types/node": "^15.0.2",
+    "@types/react": "^17.0.5",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-redux": "^7.1.16",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/react-virtualized": "^9.21.11",
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-typescript-prettier": "^4.2.0",
+    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": "^6.0.0",
+    "jest": "26.6.0",
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.4"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx}": "yarn run lint:fix"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}

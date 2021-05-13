@@ -1,0 +1,20 @@
+html {
+  font-size: 10px;
+}
+
+body {
+  font-family: Raleway;
+  font-weight: 100;
+  font-size: 1.6rem;
+}
+
+html,
+body {
+  height: 100%;
+  background: #6e7b91;
+  font-family: Roboto;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}

@@ -1,0 +1,16 @@
+.comic-strip-details {
+  display: flex;
+  flex-direction: column;
+
+  .title-and-date-create {
+    text-align: center;
+
+    .date-create {
+      font-size: 1.5rem;
+    }
+  }
+
+  .comic-strip-image {
+    margin-top: 20px;
+  }
+}

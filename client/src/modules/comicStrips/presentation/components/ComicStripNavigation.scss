@@ -1,0 +1,22 @@
+.comic-strip-navigation {
+  display: flex;
+
+  button {
+    margin-left: 15px;
+    padding: 5px 10px;
+    color: white;
+    background-color: #6e7b91;
+    border: 1.5px solid #333333;
+    box-shadow: 0 0 5px 0 grey;
+
+    &:first {
+      margin-left: 0;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: white;
+      color: #6e7b91;
+    }
+  }
+}
