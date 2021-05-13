@@ -8,8 +8,6 @@ In addition, this application implements environment-dependent dependency inject
 
 This application uses sum types/sealed unions using the [unionize](https://github.com/pelotom/unionize#match-expressions) package for representing various failure types and various redux states elegantly.
 
-There exists a server which the client routes its API requests through since the xkcd comis API has CORS enabled.
-
 Firebase is used to store the view count for each comic strip.
 
 There exists a `.env.template` file that can be renamed to `.env` to populate the environment variables to use in the application.
