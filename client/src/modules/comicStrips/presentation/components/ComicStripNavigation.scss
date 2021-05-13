@@ -4,10 +4,10 @@
   button {
     margin-left: 15px;
     padding: 5px 10px;
-    color: white;
-    background-color: #6e7b91;
     border: 1.5px solid #333333;
     box-shadow: 0 0 5px 0 grey;
+    color: white;
+    background-color: #6e7b91;
 
     &:first {
       margin-left: 0;
@@ -17,6 +17,16 @@
       cursor: pointer;
       background-color: white;
       color: #6e7b91;
+    }
+
+    &[disabled] {
+      background-color: grey;
+
+      &:hover {
+        cursor: not-allowed;
+        background-color: grey;
+        color: white;
+      }
     }
   }
 }

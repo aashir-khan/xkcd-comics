@@ -22,9 +22,12 @@ export default () => {
   // 0 means current (latest) comic strip number
   const [comicNumber, setComicNumber] = useState(params.comicNumber ?? '0');
 
-  const { stateValueGetComicStrip } = useSelector((state: RootState) => ({
-    stateValueGetComicStrip: state.comicStrips.getComicStrip,
-  }));
+  const { stateValueGetComicStrip, latestComicStripNumber } = useSelector(
+    (state: RootState) => ({
+      stateValueGetComicStrip: state.comicStrips.getComicStrip,
+      latestComicStripNumber: state.comicStrips.latestComicStripNumber,
+    })
+  );
 
   const handleRequestChangePage = ({
     isRequestNext,
@@ -88,6 +91,7 @@ export default () => {
           <div className="content">
             <ComicStripContainer
               comicStrip={comicStrip}
+              latestComicStripNumber={latestComicStripNumber}
               onRequestNextPage={handleRequestNextPage}
               onRequestPreviousPage={handleRequestPreviousPage}
               onRequestRandomComicStrip={handleRequestRandomComicStrip}
