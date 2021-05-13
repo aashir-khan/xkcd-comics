@@ -9,7 +9,7 @@ export abstract class IComicStripService {
     options: GetComicStripOptions
   ): Promise<Either<ComicStripFailure, ComicStrip>>;
 
-  abstract getRandomComicStrip(): Promise<
-    Either<ComicStripFailure, ComicStrip>
-  >;
+  abstract getRandomComicStrip(
+    maxComicStripNumber: string
+  ): Promise<Either<ComicStripFailure, ComicStrip>>;
 }

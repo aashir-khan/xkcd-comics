@@ -13,10 +13,12 @@ type GetComicStripState = UnionOf<typeof GetComicStripStateCases>;
 
 interface ComicStripState {
   getComicStrip: GetComicStripState;
+  latestComicStripNumber: string | undefined;
 }
 
 const initialState: ComicStripState = {
   getComicStrip: GetComicStripStateCases.loading(),
+  latestComicStripNumber: undefined,
 };
 
 export const comicStripsSlice = createSlice({
@@ -32,6 +34,9 @@ export const comicStripsSlice = createSlice({
       state.getComicStrip = GetComicStripStateCases.failure({
         value: failure,
       });
+    },
+    onGetLatestComicStripNumber(state, action: PayloadAction<string>) {
+      state.latestComicStripNumber = action.payload;
     },
   },
 });

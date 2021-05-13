@@ -1,4 +1,4 @@
-import { Either } from 'purify-ts/Either';
+import { Either, Right } from 'purify-ts/Either';
 
 import { IComicStripService } from '../domain/IComicStripService';
 import { ComicStrip } from '../domain/ComicStrip';
@@ -23,7 +23,19 @@ export class ComicStripServiceImpl implements IComicStripService {
     return this.comicStripRepository.getComicStrip(options);
   }
 
-  async getRandomComicStrip(): Promise<Either<ComicStripFailure, ComicStrip>> {
+  async getRandomComicStrip(
+    maxComicStripNumber: string
+  ): Promise<Either<ComicStripFailure, ComicStrip>> {
+    const randomComicStripNumber = `${Math.floor(
+      Math.random() * Number(maxComicStripNumber) + 1
+    )}`;
+
+    return this.getComicStrip({ comicNumber: randomComicStripNumber });
+  }
+
+  async getLatestComicStripNumber(): Promise<
+    Either<ComicStripFailure, number>
+  > {
     const latestComicStripOrError = await this.getComicStrip({
       comicNumber: this.comicStripRepository.latestComicStripNumber,
     });
@@ -32,12 +44,7 @@ export class ComicStripServiceImpl implements IComicStripService {
       return latestComicStripOrError.unsafeCoerce();
     } else {
       const latestComicStrip = latestComicStripOrError.unsafeCoerce();
-      const { comicNumber: maxComicNumber } = latestComicStrip;
-      const randomComicStripNumber = `${Math.floor(
-        Math.random() * Number(maxComicNumber) + 1
-      )}`;
-
-      return await this.getComicStrip({ comicNumber: randomComicStripNumber });
+      return Right(Number(latestComicStrip.comicNumber));
     }
   }
 }

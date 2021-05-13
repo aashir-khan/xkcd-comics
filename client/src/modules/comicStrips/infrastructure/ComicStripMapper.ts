@@ -21,7 +21,9 @@ export class ComicStripMapper {
       title: safe_title,
       dateCreated: dayjs()
         .set('date', Number(day))
-        .set('month', Number(month))
+        // subtract 1 since DTO has month 1 as January whereas
+        // dayjs has month 0 as January
+        .set('month', Number(month) - 1)
         .set('year', Number(year)),
       numTimesViewed,
     });
