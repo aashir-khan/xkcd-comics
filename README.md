@@ -1,6 +1,6 @@
 xkcd comics
 
-View deployed application (frontend) [here](https://aashir-xkcd-comics.herokuapp.com/)
+View deployed application [here](https://aashir-xkcd-comics.herokuapp.com/) [note: might take some time and refreshes to load/wake up from sleep as it is being hosted on Heroku]
 
 This application follows a (stripped-down) Domain-Driven Design architecture. More information can be seen [here](https://resocoder.com/2020/03/09/flutter-firebase-ddd-course-1-domain-driven-design-principles/). In addition, this application is divided into modules, with currently there only being a comicStrips module, but of which can be extended to include more modules as the domain scope increases.
 
